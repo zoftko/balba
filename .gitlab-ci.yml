@@ -1,16 +1,33 @@
 image: python:3.9
 variables:
+  APT_CACHE_DIR: "$CI_PROJECT_DIR/.cache/apt"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
 cache:
   paths:
     - .cache/pip
-    - .cache/pre-commit
+    - .cache/apt
 stages:
   - qa
+  - test
 
 pre-commit:
   stage: qa
+  before_script:
+    - pip install -U pre-commit
   script:
-    - pip install pre-commit
     - pre-commit run --all-files
+
+tests:
+  stage: test
+  before_script:
+    - rm -f /etc/apt/apt.conf.d/docker-clean
+    - mkdir -pv $APT_CACHE_DIR
+    - echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | tee /etc/apt/apt.conf.d/99-keep-downloads
+    - apt update -yq
+    - apt install -o dir::cache::archives=$APT_CACHE_DIR -y --no-install-recommends kicad
+    - pip install -U "tox>=4.8"
+  script:
+    - tox -e py -- --junitxml=pytest.xml
+  artifacts:
+    reports:
+      junit: pytest.xml
