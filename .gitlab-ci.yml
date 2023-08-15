@@ -43,7 +43,7 @@ pages:
   dependencies:
     - tests
   script:
-    - mv htmlcov /public
+    - mv htmlcov public
   artifacts:
     paths:
       - public
