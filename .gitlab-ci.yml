@@ -29,6 +29,7 @@ tests:
     - pip install -U "tox>=4.8"
   script:
     - tox -e py -- --junitxml=pytest.xml --cov-report xml --cov-report html --cov-report term
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   artifacts:
     reports:
       junit: pytest.xml
