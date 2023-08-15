@@ -9,6 +9,7 @@ cache:
 stages:
   - qa
   - test
+  - deploy
 
 pre-commit:
   stage: qa
@@ -27,7 +28,24 @@ tests:
     - apt install -o dir::cache::archives=$APT_CACHE_DIR -y --no-install-recommends kicad
     - pip install -U "tox>=4.8"
   script:
-    - tox -e py -- --junitxml=pytest.xml
+    - tox -e py -- --junitxml=pytest.xml --cov-report xml --cov-report html --cov-report term
   artifacts:
     reports:
       junit: pytest.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - htmlcov
+
+pages:
+  stage: deploy
+  dependencies:
+    - tests
+  script:
+    - mv htmlcov /public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
