@@ -20,14 +20,6 @@ def test_find_projects(tmpdir):
     for project in found_projects:
         project_name = project.project.parent.name
 
-        assert (
-            Path(tmpdir / project_name / f"{project_name}{EXT_BOARD}") == project.board
-        )
-        assert (
-            Path(tmpdir / project_name / f"{project_name}{EXT_PROJECT}")
-            == project.project
-        )
-        assert (
-            Path(tmpdir / project_name / f"{project_name}{EXT_SCHEMATIC}")
-            == project.schematic
-        )
+        assert Path(tmpdir / project_name / f"{project_name}{EXT_BOARD}") == project.board
+        assert Path(tmpdir / project_name / f"{project_name}{EXT_PROJECT}") == project.project
+        assert Path(tmpdir / project_name / f"{project_name}{EXT_SCHEMATIC}") == project.schematic

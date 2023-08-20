@@ -22,9 +22,7 @@ class Driver:
         :param dst: output path (and name)
         :return: return code as provided by kicad-cli
         """
-        return run(
-            ["kicad-cli", "sch", "export", "pdf", "--output", dst, src], check=False
-        ).returncode
+        return run(["kicad-cli", "sch", "export", "pdf", "--output", dst, src], check=False).returncode
 
     @staticmethod
     def export_board(src: str, dst: str, layers: list[str]) -> int:
