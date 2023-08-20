@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="{{ language }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="{{ keywords }}" />
+    <meta name="description" content="{{ description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+  </head>
+  <body class="container">
+    <header>
+      <nav>
+        <ul>
+          <h1>{{ title }}</h1>
+        </ul>
+      </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+    <footer>
+      <small>
+        © {{ year }}
+        <a href="{{ baseURL }}">{{ title }}</a>.
+      </small>
+      <small>
+        Powered by
+        <a href="https://gitlab.com/zoftko/balba">balba</a>
+      </small>
+    </footer>
+  </body>
+</html>

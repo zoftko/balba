@@ -21,3 +21,7 @@ from balba.balba import balba_run
 def balba(*args, **kwargs):
     """Command line entrypoint."""
     raise SystemExit(balba_run(*args, **kwargs))
+
+
+if __name__ == "__main__":
+    balba()

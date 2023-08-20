@@ -10,7 +10,7 @@ class Driver:
         """Version of the available (must be in PATH) kicad-cli executable."""
         try:
             result = run(["kicad-cli", "version"], capture_output=True, check=True)
-            return result.stdout.decode("utf-8")
+            return result.stdout.decode("utf-8").strip()
         except (CalledProcessError, FileNotFoundError):
             return ""
 

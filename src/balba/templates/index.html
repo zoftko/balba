@@ -1,0 +1,9 @@
+{% extends "layout.html" %} {% block content %} {% for project in projects %}
+<article class="grid">
+  <main>
+    <h2>{{ project.title }}</h2>
+    <p>{{ project.brief }}</p>
+  </main>
+  <img src="" alt=" {{ project.title }} thumbnail." />
+</article>
+{% endfor %} {% endblock %}
