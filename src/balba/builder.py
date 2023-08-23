@@ -11,7 +11,7 @@ from balba.models import Project
 class Builder:
     """Object in charge of building the website components."""
 
-    def __init__(self, output_directory: Path, config: dict):
+    def __init__(self, output_directory: Path, config: dict, dev: bool):
         self.config = config
         self.output_directory = output_directory
         self.environment = Environment(loader=PackageLoader("balba"), autoescape=select_autoescape())
@@ -20,6 +20,9 @@ class Builder:
         self.environment.globals["year"] = datetime.today().year
 
         self.output_directory.mkdir(exist_ok=True)
+
+        if dev:
+            self.environment.globals["base_url"] = f"file://{output_directory.absolute()}"
 
     def build_index(self, projects: list[Project]):
         """Build the website index and write it to the output directory.

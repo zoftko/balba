@@ -17,6 +17,7 @@ from balba.balba import balba_run
     help="Output folder path",
     default=Path.cwd() / "balba-build",
 )
+@option("--dev", default=False, is_flag=True)
 @version_option(__version__)
 def balba(*args, **kwargs):
     """Command line entrypoint."""

@@ -10,7 +10,7 @@ from balba.explorer import find_project_files, read_frontmatter
 from balba.models import Project
 
 
-def balba_run(src: str, output: str) -> int:
+def balba_run(src: str, output: str, dev: bool) -> int:
     """Perform the website building process."""
     version = Driver.version()
     if not version:
@@ -23,7 +23,7 @@ def balba_run(src: str, output: str) -> int:
         return 126
 
     config = load(config_file.read_bytes(), CLoader)
-    builder = Builder(Path(output), config)
+    builder = Builder(Path(output), config, dev)
 
     echo(f"Using kicad-cli {version}")
     echo(f"Looking for projects in {src}")
