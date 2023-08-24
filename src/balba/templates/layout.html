@@ -12,13 +12,15 @@
     />
   </head>
   <body class="container">
-    <header>
-      <nav>
-        <ul>
-          <li><h1>{{ title }}</h1></li>
-        </ul>
-      </nav>
-    </header>
+    <nav>
+      <ul>
+        <li>
+          <a href="{{ base_url }}">
+            <h1>{{ title }}</h1>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <main>{% block content %}{% endblock %}</main>
     <footer>
       <small id="copyright-legend">

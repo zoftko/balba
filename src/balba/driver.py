@@ -25,20 +25,22 @@ class Driver:
         return run(["kicad-cli", "sch", "export", "pdf", "--output", dst, src], check=False).returncode
 
     @staticmethod
-    def export_board(src: str, dst: str, layers: list[str]) -> int:
+    def export_board_svg(src: str, dst: str, layers: list[str], page_size_mode=2) -> int:
         """
         Export a board to an image file.
         :param src:
         :param dst:
         :param layers:
+        :param page_size_mode:
         :return:
         """
         return run(
             [
                 "kicad-cli",
-                "board",
+                "pcb",
                 "export",
-                "pdf",
+                "svg",
+                f"--page-size-mode={page_size_mode}",
                 "--layers",
                 ",".join(layers),
                 "--output",

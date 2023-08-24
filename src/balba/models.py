@@ -1,5 +1,5 @@
 """Collection of classes that represent Kicad entities."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
@@ -36,6 +36,7 @@ class Project:
     version: str
     status: ProjectStatus
     files: ProjectFiles
+    board_layers: list[str] = field(default_factory=lambda: ["F.Cu", "B.Cu", "F.Silkscreen"])
 
     @property
     def slug(self):
