@@ -1,31 +1,50 @@
 """Layer that interacts with the kicad-cli executable."""
-from subprocess import CalledProcessError, run
+from subprocess import DEVNULL, STDOUT, CalledProcessError, CompletedProcess, run
 
 
 class Driver:
     """Component in charge of communicating the application code with the kicad-cli executable."""
 
-    @staticmethod
-    def version() -> str:
+    def __init__(self, verbose: bool = False):
+        self.verbose = verbose
+        self.output = DEVNULL
+
+        if verbose:
+            self.output = STDOUT
+
+    def execute_command(self, *args, **kwargs) -> CompletedProcess:
+        """
+        Wrapper around `subprocess.run` to execute a command and control its output based on the verbosity levels.
+        :param args:
+        :param kwargs:
+        :return: CompletedProcess, as returned by `subprocess.run`.
+        """
+        check = kwargs.pop("check", True)
+        if not kwargs.get("capture_output"):
+            kwargs["stdout"] = self.output
+
+        return run(*args, **kwargs, check=check)
+
+    def version(self) -> str:
         """Version of the available (must be in PATH) kicad-cli executable."""
         try:
-            result = run(["kicad-cli", "version"], capture_output=True, check=True)
+            result = self.execute_command(["kicad-cli", "version"], capture_output=True)
             return result.stdout.decode("utf-8").strip()
         except (CalledProcessError, FileNotFoundError):
             return ""
 
-    @staticmethod
-    def export_schematic(src: str, dst: str) -> int:
+    def export_schematic(self, src: str, dst: str) -> int:
         """
         Export a schematic to a PDF file.
         :param src: path to the schematic
         :param dst: output path (and name)
         :return: return code as provided by kicad-cli
         """
-        return run(["kicad-cli", "sch", "export", "pdf", "--output", dst, src], check=False).returncode
+        return self.execute_command(
+            ["kicad-cli", "sch", "export", "pdf", "--output", dst, src], check=False
+        ).returncode
 
-    @staticmethod
-    def export_board_svg(src: str, dst: str, layers: list[str], page_size_mode=2) -> int:
+    def export_board_svg(self, src: str, dst: str, layers: list[str], page_size_mode=2) -> int:
         """
         Export a board to an image file.
         :param src:
@@ -34,7 +53,7 @@ class Driver:
         :param page_size_mode:
         :return:
         """
-        return run(
+        return self.execute_command(
             [
                 "kicad-cli",
                 "pcb",

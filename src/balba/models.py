@@ -33,8 +33,7 @@ class Project:
 
     title: str
     brief: str
-    version: str
-    status: ProjectStatus
+    content: str
     files: ProjectFiles
     board_layers: list[str] = field(default_factory=lambda: ["F.Cu", "B.Cu", "F.Silkscreen"])
 

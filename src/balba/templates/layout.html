@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ language }}">
+<html lang="{{ lang }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="keywords" content="{{ keywords }}" />
@@ -10,27 +10,30 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
     />
+    <link rel="stylesheet" href="{{ build_url('balba.css') }}" />
   </head>
-  <body class="container">
-    <nav>
+  <body>
+    <nav class="container-fluid">
       <ul>
         <li>
-          <a href="{{ base_url }}">
-            <h1>{{ title }}</h1>
-          </a>
+          <a href="{{ base_url }}"> {{ title }} </a>
         </li>
       </ul>
     </nav>
-    <main>{% block content %}{% endblock %}</main>
-    <footer>
-      <small id="copyright-legend">
-        © {{ year }}
-        <a href="{{ base_url }}">{{ title }}</a>.
-      </small>
-      <small>
-        Powered by
-        <a href="https://gitlab.com/zoftko/balba">balba</a>
-      </small>
-    </footer>
+    <main class="container">
+      <div role="document">
+        <section>{% block content %}{% endblock %}</section>
+        <footer>
+          <small id="copyright-legend">
+            © {{ year }}
+            <a href="{{ base_url }}">{{ title }}</a>.
+          </small>
+          <small>
+            Powered by
+            <a href="https://gitlab.com/zoftko/balba">balba</a>
+          </small>
+        </footer>
+      </div>
+    </main>
   </body>
 </html>

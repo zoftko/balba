@@ -5,8 +5,10 @@
     <p>{{ project.brief }}</p>
   </main>
   <img
-    src="{{ base_url }}/{{ project.slug }}/board.svg"
+    class="container-fluid"
+    src="{{ build_url([project.slug, 'board.svg']) }}"
     alt=" {{ project.title }} thumbnail."
   />
+  <a href="{{ build_url(['boards', project.slug]) }}"></a>
 </article>
 {% endfor %} {% endblock %}
