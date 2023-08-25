@@ -53,4 +53,4 @@ tag_name = "v{new_version}"
 message = "Version updated from {current_version} to {new_version}"
 
 [[tool.bumpversion.files]]
-filename = "balba/__init__.py"
+filename = "src/balba/__init__.py"

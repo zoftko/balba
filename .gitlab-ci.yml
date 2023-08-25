@@ -1,7 +1,7 @@
 image: python:3.9
 variables:
-  APT_CACHE_DIR: "$CI_PROJECT_DIR/.cache/apt"
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  APT_CACHE_DIR: '$CI_PROJECT_DIR/.cache/apt'
+  PIP_CACHE_DIR: '$CI_PROJECT_DIR/.cache/pip'
 cache:
   paths:
     - .cache/pip
@@ -50,3 +50,25 @@ pages:
       - public
   only:
     - main
+
+pypi:
+  stage: deploy
+  variables:
+    FLIT_USERNAME: '__token__'
+    FLIT_PASSWORD: '$PYPI_API_TOKEN'
+  script:
+    - pip install -U flit
+    - flit publish
+  rules:
+    - if: $CI_COMMIT_TAG
+
+gitlab_release:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - printf "Creating Gitlab Release %s\n", "$CI_COMMIT_TAG"
+  release:
+    tag_name: $CI_COMMIT_TAG
+    description: $CI_COMMIT_TAG
+  rules:
+    - if: $CI_COMMIT_TAG
