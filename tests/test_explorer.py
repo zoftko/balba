@@ -18,7 +18,7 @@ def test_find_project_files(tmpdir):
         (folder / f"{folder.name}{EXT_PROJECT}").touch()
         (folder / f"{folder.name}{EXT_SCHEMATIC}").touch()
 
-    found_projects = find_project_files(tmpdir)
+    found_projects = find_project_files(Path(tmpdir))
     assert len(found_projects) == 3
     for project in found_projects:
         project_name = project.project.parent.name

@@ -16,7 +16,8 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "tox>=4.8"
+    "tox>=4.8",
+    "bump-my-version>=0.9"
 ]
 
 [build-system]
@@ -43,3 +44,13 @@ source = ["balba"]
 
 [tool.coverage.report]
 show_missing = true
+
+[tool.bumpversion]
+current_version = "0.1.0"
+commit = true
+tag = true
+tag_name = "v{new_version}"
+message = "Version updated from {current_version} to {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "balba/__init__.py"

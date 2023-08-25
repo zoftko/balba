@@ -15,7 +15,7 @@ def runner() -> CliRunner:
 
 def test_no_kicad_cli(runner, tmpdir):
     with patch("balba.driver.run", side_effect=FileNotFoundError) as mock:
-        output = runner.invoke(balba, [tmpdir.strpath])
+        output = runner.invoke(balba, ["--source", tmpdir.strpath])
         assert mock.call_count == 1
 
     assert output.exit_code == 127
@@ -23,7 +23,7 @@ def test_no_kicad_cli(runner, tmpdir):
 
 def test_no_config_file(runner, tmpdir):
     with patch("balba.driver.run", return_Value="7.0.1") as mock:
-        output = runner.invoke(balba, [tmpdir.strpath])
+        output = runner.invoke(balba, ["--source", tmpdir.strpath])
         assert mock.call_count == 1
 
     assert output.exit_code == 126

@@ -10,13 +10,13 @@ from balba.models import EXT_BOARD, EXT_MARKDOWN, EXT_PROJECT, EXT_SCHEMATIC, Pr
 FRONT_MATTER_REGEX = re.compile(r"^-{3,}$")
 
 
-def find_project_files(path: str) -> list[ProjectFiles]:
+def find_project_files(path: Path) -> list[ProjectFiles]:
     """Return a list of all Kicad projects found under a certain directory.
 
-    :param str path: Path where the search will start from
+    :param path: Path where the search will start from
     :return: List of projects found
     """
-    project_files = Path(path).glob(f"**/*{EXT_PROJECT}")
+    project_files = path.glob(f"**/*{EXT_PROJECT}")
 
     return [
         ProjectFiles(
