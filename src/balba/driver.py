@@ -68,3 +68,12 @@ class Driver:
             ],
             check=False,
         ).returncode
+
+    def export_python_bom(self, src: str, dst: str) -> int:
+        """
+        Generate an XML BOM from a KiCad schematic
+        :param src: path to the schematic
+        :param dst: output path (and name)
+        :return:
+        """
+        return self.execute_command(["kicad-cli", "sch", "export", "python-bom", "--output", dst, src]).returncode

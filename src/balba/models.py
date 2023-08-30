@@ -43,6 +43,15 @@ class Project:
         return self.files.project.stem
 
 
+@dataclass(eq=True, frozen=True)
+class Component:
+    """A BOM component."""
+
+    part: str
+    value: str
+    description: str
+
+
 @dataclass
 class Layer:
     """Kicad Layer as shown on the stackup section."""
