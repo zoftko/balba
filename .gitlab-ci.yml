@@ -24,8 +24,10 @@ tests:
     - rm -f /etc/apt/apt.conf.d/docker-clean
     - mkdir -pv $APT_CACHE_DIR
     - echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | tee /etc/apt/apt.conf.d/99-keep-downloads
+    - >
+      sed -i '/Suites: bookworm / s/$/ bookworm-backports/' /etc/apt/sources.list.d/debian.sources
     - apt update -yq
-    - apt install -o dir::cache::archives=$APT_CACHE_DIR -y --no-install-recommends kicad
+    - apt install -t bookworm-backports -o dir::cache::archives=$APT_CACHE_DIR -y --no-install-recommends kicad
     - pip install -U "tox>=4.8"
   script:
     - tox -e py -- --junitxml=pytest.xml --cov-report xml --cov-report html --cov-report term
