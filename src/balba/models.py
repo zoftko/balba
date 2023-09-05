@@ -35,7 +35,7 @@ class Project:
     brief: str
     content: str
     files: ProjectFiles
-    board_layers: list[str] = field(default_factory=lambda: ["F.Cu", "B.Cu", "F.Silkscreen"])
+    board_layers: list[str] = field(default_factory=lambda: ["F.Cu", "B.Cu", "F.Silkscreen", "Edge.Cuts"])
 
     @property
     def slug(self):
