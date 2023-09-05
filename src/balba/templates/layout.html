@@ -20,20 +20,20 @@
         </li>
       </ul>
     </nav>
-    <main class="container">
-      <div role="document">
-        <section>{% block content %}{% endblock %}</section>
-        <footer>
-          <small id="copyright-legend">
-            © {{ year }}
-            <a href="{{ base_url }}">{{ title }}</a>.
-          </small>
-          <small>
-            Powered by
-            <a href="https://gitlab.com/zoftko/balba">balba</a>
-          </small>
-        </footer>
+    <div class="container" role="document">
+      {% block content %} {% endblock %}
+    </div>
+    <footer>
+      <div class="container">
+        <small id="copyright-legend">
+          © {{ year }}
+          <a href="{{ base_url }}">{{ title }}</a>.
+        </small>
+        <small>
+          Powered by
+          <a href="https://gitlab.com/zoftko/balba">balba</a>
+        </small>
       </div>
-    </main>
+    </footer>
   </body>
 </html>

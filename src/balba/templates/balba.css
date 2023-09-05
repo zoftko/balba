@@ -2,11 +2,6 @@ article {
   position: relative;
 }
 
-article > main {
-  display: flex;
-  flex-direction: column;
-}
-
 article > a {
   position: absolute;
   left: 0;
@@ -15,4 +10,12 @@ article > a {
   bottom: 0;
   height: 100%;
   width: 100%;
+}
+
+.mb {
+  margin-bottom: calc(var(--block-spacing-vertical) * 0.5);
+}
+
+.thumbnail {
+  max-height: 420px;
 }
