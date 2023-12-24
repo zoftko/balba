@@ -1,0 +1,44 @@
+name: qa
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - uses: pre-commit/action@v3.0.0
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v3
+         with:
+           fetch-depth: 0
+       - uses: actions/setup-python@v5
+         with:
+           python-version: '3.9'
+       - name: Install pip dependencies
+         run: pip install tox
+       - name: Install KiCad
+         run: |
+            sudo add-apt-repository --yes ppa:kicad/kicad-7.0-releases
+            sudo apt update
+            sudo apt install -y --no-install-recommends kicad
+       - name: Run tests
+         run: tox -e py -- --junitxml=pytest.xml --cov-report xml --cov-report term
+       - uses: sonarsource/sonarcloud-github-action@master
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         with:
+           args: >
+             -Dsonar.organization=zoftko
+             -Dsonar.projectKey=zoftko_balba
+             -Dsonar.python.version=3.9
